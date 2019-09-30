@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.FetchType;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.sql.Date;
 
 /**
@@ -41,6 +43,7 @@ public class Document {
      * Дата документа
      */
     @Column(name = "doc_date")
+    @Temporal(TemporalType.DATE)
     private Date docDate;
 
     @ManyToOne(fetch = FetchType.LAZY)

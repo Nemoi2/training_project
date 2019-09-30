@@ -9,6 +9,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -74,7 +75,8 @@ public class Organization {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @OneToMany(mappedBy = "organization",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "org_id")
     private Set<Office> offices;
 
     public Organization() {

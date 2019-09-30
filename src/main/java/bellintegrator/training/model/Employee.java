@@ -5,16 +5,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Version;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.FetchType;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
 
 /**
  * Сотрудник
@@ -71,12 +68,8 @@ public class Employee {
     @Column(name = "is_identified")
     private Boolean isIdentified;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "office_id")
-    private Office office;
-
-    @OneToMany(mappedBy = "employee",cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Document> documentSet;
+    @OneToOne(mappedBy = "employee",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Document document;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")
@@ -87,7 +80,7 @@ public class Employee {
 
     public Employee(final Long id, final Integer version, final String firstName, final String secondName,
                     final String middleName, final String position, final String phone, final Boolean isIdentified,
-                    final Office office, final Set<Document> documentSet, final Country country) {
+                    final Document document, final Country country) {
         this.id = id;
         this.version = version;
         this.firstName = firstName;
@@ -96,8 +89,7 @@ public class Employee {
         this.position = position;
         this.phone = phone;
         this.isIdentified = isIdentified;
-        this.office = office;
-        this.documentSet = documentSet;
+        this.document = document;
         this.country = country;
     }
 
@@ -157,23 +149,12 @@ public class Employee {
         isIdentified = identified;
     }
 
-    public Office getOffice() {
-        return office;
+    public Document getDocument() {
+        return document;
     }
 
-    public void setOffice(final Office office) {
-        this.office = office;
-    }
-
-    public Set<Document> getDocumentSet() {
-        if (documentSet == null) {
-            documentSet = new HashSet<>();
-        }
-        return documentSet;
-    }
-
-    public void setDocumentSet(final Set<Document> documentSet) {
-        this.documentSet = documentSet;
+    public void setDocument(final Document document) {
+        this.document = document;
     }
 
     public Country getCountry() {
@@ -182,18 +163,5 @@ public class Employee {
 
     public void setCountry(final Country country) {
         this.country = country;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Employee employee = (Employee) obj;
-        return id == employee.id;
     }
 }

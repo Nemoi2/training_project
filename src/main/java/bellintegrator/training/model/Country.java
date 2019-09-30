@@ -5,11 +5,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Version;
-import javax.persistence.OneToMany;
-import javax.persistence.CascadeType;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
 
 /**
  * Страны
@@ -41,19 +36,14 @@ public class Country {
     @Column(name = "citizenship_code")
     private String citizenshipCode;
 
-    @OneToMany(mappedBy = "country",cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Employee> employees;
-
     public Country() {
     }
 
-    public Country(final Long id, final Integer version, final String citizenshipName, final String citizenshipCode,
-                   final Set<Employee> employees) {
+    public Country(final Long id, final Integer version, final String citizenshipName, final String citizenshipCode) {
         this.id = id;
         this.version = version;
         this.citizenshipName = citizenshipName;
         this.citizenshipCode = citizenshipCode;
-        this.employees = employees;
     }
 
     public Long getId() {
@@ -78,29 +68,5 @@ public class Country {
 
     public void setCitizenshipCode(final String citizenshipCode) {
         this.citizenshipCode = citizenshipCode;
-    }
-
-    public Set<Employee> getEmployees() {
-        if (employees == null) {
-            employees = new HashSet<>();
-        }
-        return employees;
-    }
-
-    public void setEmployees(final Set<Employee> employees) {
-        this.employees = employees;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Country country = (Country) obj;
-        return id == country.id;
     }
 }

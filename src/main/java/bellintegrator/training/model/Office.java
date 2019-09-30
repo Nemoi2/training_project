@@ -6,11 +6,9 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Version;
 import javax.persistence.OneToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.GenerationType;
-import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
 import java.util.HashSet;
 import java.util.Objects;
@@ -59,25 +57,21 @@ public class Office {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "org_id")
-    private Organization organization;
-
-    @OneToMany(mappedBy = "office",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "office_id")
     private Set<Employee> employeeSet;
 
     public Office() {
     }
 
     public Office(final Long id, final Integer version, final String name, final String address, final String phone,
-                  final Boolean isActive, final Organization organization, final Set<Employee> employeeSet) {
+                  final Boolean isActive, final Set<Employee> employeeSet) {
         this.id = id;
         this.version = version;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.isActive = isActive;
-        this.organization = organization;
         this.employeeSet = employeeSet;
     }
 
@@ -119,14 +113,6 @@ public class Office {
 
     public void setActive(final Boolean active) {
         isActive = active;
-    }
-
-    public Organization getOrganization() {
-        return organization;
-    }
-
-    public void setOrganization(final Organization organization) {
-        this.organization = organization;
     }
 
     public Set<Employee> getEmployeeSet() {

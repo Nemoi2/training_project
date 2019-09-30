@@ -6,9 +6,9 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Version;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.MapsId;
 import javax.persistence.JoinColumn;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.FetchType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,8 +22,7 @@ import java.sql.Date;
 public class Document {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "employee_id")
     private Long id;
 
     /**
@@ -46,8 +45,8 @@ public class Document {
     @Temporal(TemporalType.DATE)
     private Date docDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     private Employee employee;
 
     @ManyToOne(fetch = FetchType.LAZY)

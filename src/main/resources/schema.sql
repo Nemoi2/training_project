@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS Employee(
 COMMENT ON TABLE Employee IS 'Сотрудники';
 
 CREATE TABLE IF NOT EXISTS Document(
-  id               INTEGER               COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT,
+  employee_id      INTEGER NOT NULL      COMMENT 'Уникальный идентификатор' PRIMARY KEY,
   version          INTEGER NOT NULL      COMMENT 'Служебное поле hibernate',
   number           VARCHAR(15) NOT NULL  COMMENT 'Уникальный номер документа',
   doc_date         DATE                  COMMENT 'Дата создания',

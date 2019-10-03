@@ -82,11 +82,9 @@ public class Organization {
     public Organization() {
     }
 
-    public Organization(final Long id, final Integer version, final String name, final String fullName,
+    public Organization(final String name, final String fullName,
                         final String inn, final String kpp, final String address, final String phone,
-                        final Boolean isActive, final Set<Office> offices) {
-        this.id = id;
-        this.version = version;
+                        final Boolean isActive) {
         this.name = name;
         this.fullName = fullName;
         this.inn = inn;
@@ -94,7 +92,6 @@ public class Organization {
         this.address = address;
         this.phone = phone;
         this.isActive = isActive;
-        this.offices = offices;
     }
 
     public Long getId() {
@@ -153,11 +150,11 @@ public class Organization {
         this.phone = phone;
     }
 
-    public Boolean getActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(final Boolean active) {
+    public void setIsActive(final Boolean active) {
         isActive = active;
     }
 

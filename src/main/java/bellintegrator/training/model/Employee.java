@@ -141,11 +141,11 @@ public class Employee {
         this.phone = phone;
     }
 
-    public Boolean getIdentified() {
+    public Boolean getIsIdentified() {
         return isIdentified;
     }
 
-    public void setIdentified(final Boolean identified) {
+    public void setIsIdentified(final Boolean identified) {
         isIdentified = identified;
     }
 

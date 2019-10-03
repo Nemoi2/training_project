@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.FetchType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Документ

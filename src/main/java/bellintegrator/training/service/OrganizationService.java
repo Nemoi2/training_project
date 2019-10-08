@@ -1,9 +1,11 @@
 package bellintegrator.training.service;
 
+import bellintegrator.training.view.OrganizationsView;
 import bellintegrator.training.view.OrganizationView;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Сервис
@@ -31,4 +33,11 @@ public interface OrganizationService {
      * @return {@OrganizationView}
      */
     OrganizationView getOrganization(Long id);
+
+    /**
+     * Получить список организаций
+     *
+     * @return {@OrganizationView}
+     */
+    List<OrganizationsView> organizations (OrganizationsView organizationsView);
 }

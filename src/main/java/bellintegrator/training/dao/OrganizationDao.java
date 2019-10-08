@@ -3,18 +3,12 @@ package bellintegrator.training.dao;
 
 import bellintegrator.training.model.Organization;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * DAO для работы с Organization
  */
 public interface OrganizationDao {
-    /**
-     * Получить все объекты Organization
-     *
-     * @return
-     */
-    Set<Organization> allOrganization();
 
     /**
      * Получить Organization по идентификатору
@@ -30,4 +24,12 @@ public interface OrganizationDao {
      * @param organization
      */
     void saveOrganization(Organization organization);
+
+    /**
+     * Получить Organization по идентификатору
+     *
+     * @param name
+     * @return
+     */
+    List<Organization> loadOrganizations(String name, String inn, Boolean isActive);
 }

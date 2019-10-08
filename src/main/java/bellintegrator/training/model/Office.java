@@ -36,13 +36,13 @@ public class Office {
     /**
      * Иия офиса
      */
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
     /**
      * Адрес офиса
      */
-    @Column(name = "address", nullable = false)
+    @Column(name = "address")
     private String address;
 
     /**
@@ -57,22 +57,15 @@ public class Office {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    @Column(name = "org_id",nullable = false)
+    private Long orgId;
+
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "office_id")
     private Set<Employee> employeeSet;
 
     public Office() {
-    }
-
-    public Office(final Long id, final Integer version, final String name, final String address, final String phone,
-                  final Boolean isActive, final Set<Employee> employeeSet) {
-        this.id = id;
-        this.version = version;
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.isActive = isActive;
-        this.employeeSet = employeeSet;
     }
 
     public Long getId() {
@@ -113,6 +106,14 @@ public class Office {
 
     public void setIsActive(final Boolean active) {
         isActive = active;
+    }
+
+    public Long getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(final Long orgId) {
+        this.orgId = orgId;
     }
 
     public Set<Employee> getEmployeeSet() {

@@ -1,7 +1,6 @@
 package bellintegrator.training.dao;
 
 import bellintegrator.training.model.Office;
-import bellintegrator.training.model.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -39,22 +38,21 @@ public class OfficeDaoImpl implements OfficeDao {
 
         Root<Office> root = criteriaQuery.from(Office.class);
 
+        Predicate predicate = criteriaBuilder.equal(root.get("orgId"),orgId);
+
         if (name != null ) {
-            if (phone != null) {
-                criteriaQuery.select(root).where(root.get("orgId").in(orgId), root.get("name").in(name),
-                        root.get("phone").in(phone), root.get("isActive").in(isActive));
-            } else {
-                criteriaQuery.select(root).where(root.get("orgId").in(orgId), root.get("name").in(name),
-                        root.get("isActive").in(isActive));
-            }
-        }else{
-            if (phone != null) {
-            criteriaQuery.select(root).where(root.get("orgId").in(orgId), root.get("phone").in(phone),
-                    root.get("isActive").in(isActive));
-            }else {
-            criteriaQuery.select(root).where(root.get("orgId").in(orgId), root.get("isActive").in(isActive));
-            }
+
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal( root.get("name"), name));
         }
+        if (phone != null) {
+
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal( root.get("phone"), phone));
+        }
+        
+        predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("isActive"),isActive));
+
+        criteriaQuery.where(predicate);
+        criteriaQuery.select(root);
 
         TypedQuery<Office> query = em.createQuery(criteriaQuery);
         return query.getResultList();

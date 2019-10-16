@@ -14,8 +14,8 @@ COMMENT ON TABLE Organization IS 'Организация';
 CREATE TABLE IF NOT EXISTS Office(
   id               INTEGER               COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT,
   version          INTEGER NOT NULL      COMMENT 'Служебное поле hibernate',
-  name             VARCHAR(25) NOT NULL  COMMENT 'Имя офиса',
-  address          VARCHAR(50) NOT NULL  COMMENT 'Адрес',
+  name             VARCHAR(25)           COMMENT 'Имя офиса',
+  address          VARCHAR(50)           COMMENT 'Адрес',
   phone            VARCHAR(15)           COMMENT 'Телефон',
   is_active        BOOLEAN DEFAULT TRUE  COMMENT 'Активен ли офис?',
   org_id           INTEGER NOT NULL      COMMENT 'Внешний ключ на организацию'
@@ -23,18 +23,16 @@ CREATE TABLE IF NOT EXISTS Office(
 COMMENT ON TABLE Office IS 'Офис';
 
 CREATE TABLE IF NOT EXISTS Doc_Type(
-  id               INTEGER               COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT,
+  doc_code         INTEGER               COMMENT 'Уникальный идентификатор, Код документа' PRIMARY KEY,
   version          INTEGER NOT NULL      COMMENT 'Служебное поле hibernate',
-  name             VARCHAR(40) NOT NULL  COMMENT 'Имя документа',
-  doc_code         VARCHAR(15)           COMMENT 'Код документа'
+  name             VARCHAR(40) NOT NULL  COMMENT 'Имя документа'
  );
 COMMENT ON TABLE Doc_Type IS 'Тип документа';
 
 CREATE TABLE IF NOT EXISTS Country(
-  id               INTEGER               COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT,
+  citizenship_code INTEGER               COMMENT 'Уникальный идентификатор, код страны' PRIMARY KEY,
   version          INTEGER NOT NULL      COMMENT 'Служебное поле hibernate',
-  citizenship_name VARCHAR(25) NOT NULL  COMMENT 'Имя страны гражданина',
-  citizenship_code INTEGER               COMMENT 'Код страны гражданина'
+  citizenship_name VARCHAR(25)           COMMENT 'Имя страны гражданина'
  );
 COMMENT ON TABLE Country IS 'Страны';
 
@@ -48,16 +46,17 @@ CREATE TABLE IF NOT EXISTS Employee(
   phone            VARCHAR(15)           COMMENT 'Телефон',
   is_identified    BOOLEAN DEFAULT TRUE  COMMENT 'Идентифицирован?',
   office_id        INTEGER NOT NULL      COMMENT 'Внешний ключ на офис',
-  country_id       INTEGER NOT NULL      COMMENT 'Внешний ключ на страны'
+  country_id       INTEGER               COMMENT 'Внешний ключ на страны'
  );
 COMMENT ON TABLE Employee IS 'Сотрудники';
 
 CREATE TABLE IF NOT EXISTS Document(
   employee_id      INTEGER NOT NULL      COMMENT 'Уникальный идентификатор' PRIMARY KEY,
   version          INTEGER NOT NULL      COMMENT 'Служебное поле hibernate',
-  number           VARCHAR(15) NOT NULL  COMMENT 'Уникальный номер документа',
+  name             VARCHAR(40)           COMMENT 'Имя документа',
+  number           VARCHAR(15)           COMMENT 'Уникальный номер документа',
   doc_date         DATE                  COMMENT 'Дата создания',
-  doc_type_id      INTEGER NOT NULL      COMMENT 'Внешний ключ на страны'
+  doc_type_id      INTEGER               COMMENT 'Внешний ключ на страны'
  );
 COMMENT ON TABLE Document IS 'Документы';
 
@@ -71,7 +70,7 @@ CREATE INDEX IX_Document_Employee_Id   ON Document (employee_id);
 ALTER TABLE Document ADD FOREIGN KEY (employee_id) REFERENCES Employee(id);
 
 CREATE INDEX IX_Document_Doc_Type_Id   ON Document (doc_type_id);
-ALTER TABLE Document ADD FOREIGN KEY (doc_type_id) REFERENCES Doc_Type(id);
+ALTER TABLE Document ADD FOREIGN KEY (doc_type_id) REFERENCES Doc_Type(doc_code);
 
 CREATE INDEX IX_Employee_Country_Id    ON Employee (country_id);
-ALTER TABLE Employee ADD FOREIGN KEY (country_id)  REFERENCES Country(id);
+ALTER TABLE Employee ADD FOREIGN KEY (country_id)  REFERENCES Country(citizenship_code);

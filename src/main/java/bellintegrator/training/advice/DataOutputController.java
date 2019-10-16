@@ -30,7 +30,6 @@ public class DataOutputController implements ResponseBodyAdvice<Object> {
         if(o == null) {
             return new DataView(new SuccessView("success"));
         }
-
         return new DataView(o);
     }
 }

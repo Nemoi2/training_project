@@ -33,10 +33,16 @@ public class Document {
     private Integer version;
 
     /**
+     * Иия документа
+     */
+    @Column(name = "name")
+    private String docName;
+
+    /**
      * Уникальный номер документа
      */
-    @Column(name = "number", nullable = false)
-    private String number;
+    @Column(name = "number")
+    private String docNumber;
 
     /**
      * Дата документа
@@ -49,21 +55,11 @@ public class Document {
     @MapsId
     private Employee employee;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "doc_type_id")
     private DocumentType documentType;
 
     public Document() {
-    }
-
-    public Document(final Long id, final Integer version, final String number, final Date docDate,
-                    final Employee employee, final DocumentType documentType) {
-        this.id = id;
-        this.version = version;
-        this.number = number;
-        this.docDate = docDate;
-        this.employee = employee;
-        this.documentType = documentType;
     }
 
     public Long getId() {
@@ -74,12 +70,20 @@ public class Document {
         this.id = id;
     }
 
-    public String getNumber() {
-        return number;
+    public String getDocName() {
+        return docName;
     }
 
-    public void setNumber(final String number) {
-        this.number = number;
+    public void setDocName(final String docName) {
+        this.docName = docName;
+    }
+
+    public String getDocNumber() {
+        return docNumber;
+    }
+
+    public void setDocNumber(final String docNumber) {
+        this.docNumber = docNumber;
     }
 
     public Date getDocDate() {

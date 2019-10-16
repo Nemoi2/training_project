@@ -68,29 +68,18 @@ public class Employee {
     @Column(name = "is_identified")
     private Boolean isIdentified;
 
-    @OneToOne(mappedBy = "employee",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "office_id")
+    private Office office;
+
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private Document document;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
 
     public Employee() {
-    }
-
-    public Employee(final Long id, final Integer version, final String firstName, final String secondName,
-                    final String middleName, final String position, final String phone, final Boolean isIdentified,
-                    final Document document, final Country country) {
-        this.id = id;
-        this.version = version;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.middleName = middleName;
-        this.position = position;
-        this.phone = phone;
-        this.isIdentified = isIdentified;
-        this.document = document;
-        this.country = country;
     }
 
     public Long getId() {
@@ -163,5 +152,13 @@ public class Employee {
 
     public void setCountry(final Country country) {
         this.country = country;
+    }
+
+    public Office getOffice() {
+        return office;
+    }
+
+    public void setOffice(final Office office) {
+        this.office = office;
     }
 }

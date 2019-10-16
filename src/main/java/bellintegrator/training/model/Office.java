@@ -6,9 +6,11 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Version;
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
 import java.util.HashSet;
 import java.util.Objects;
@@ -57,13 +59,12 @@ public class Office {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @Column(name = "org_id",nullable = false)
-    private Long orgId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "org_id")
+    private Organization organization;
 
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "office_id")
-    private Set<Employee> employeeSet;
+    @OneToMany(mappedBy = "office", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Employee> employees;
 
     public Office() {
     }
@@ -108,23 +109,35 @@ public class Office {
         isActive = active;
     }
 
-    public Long getOrgId() {
-        return orgId;
+    public Organization getOrganization() {
+        return organization;
     }
 
-    public void setOrgId(final Long orgId) {
-        this.orgId = orgId;
+    public void setOrganization(final Organization organization) {
+        this.organization = organization;
     }
 
-    public Set<Employee> getEmployeeSet() {
-        if (employeeSet == null) {
-            employeeSet = new HashSet<>();
+    public Set<Employee> getEmployees() {
+        if (employees == null) {
+            employees = new HashSet<>();
         }
-        return employeeSet;
+        return employees;
     }
 
-    public void setEmployeeSet(final Set<Employee> employeeSet) {
-        this.employeeSet = employeeSet;
+    public void setEmployees(final Set<Employee> employees) {
+        this.employees = employees;
+        for(Employee employee: getEmployees()) {
+            employee.setOffice(this);
+        }
+    }
+
+    public void addEmployee(final Employee employee) {
+        getEmployees().add(employee);
+        employee.setOffice(this);
+    }
+
+    public void removeEmployee(final Employee employee) {
+        getEmployees().remove(employee);
     }
 
     @Override

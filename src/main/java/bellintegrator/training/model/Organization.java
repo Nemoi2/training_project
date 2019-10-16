@@ -9,7 +9,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.CascadeType;
-import javax.persistence.JoinColumn;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -75,23 +74,10 @@ public class Organization {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "org_id")
+    @OneToMany(mappedBy = "organization",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Office> offices;
 
     public Organization() {
-    }
-
-    public Organization(final String name, final String fullName,
-                        final String inn, final String kpp, final String address, final String phone,
-                        final Boolean isActive) {
-        this.name = name;
-        this.fullName = fullName;
-        this.inn = inn;
-        this.kpp = kpp;
-        this.address = address;
-        this.phone = phone;
-        this.isActive = isActive;
     }
 
     public Long getId() {
@@ -167,6 +153,18 @@ public class Organization {
 
     public void setOffices(final Set<Office> offices) {
         this.offices = offices;
+        for(Office office: getOffices()) {
+            office.setOrganization(this);
+        }
+    }
+
+    public void addOffice(final Office office) {
+        getOffices().add(office);
+        office.setOrganization(this);
+    }
+
+    public void removeOffice(final Office office) {
+        getOffices().remove(office);
     }
 
     @Override

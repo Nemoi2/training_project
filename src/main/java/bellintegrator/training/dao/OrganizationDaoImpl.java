@@ -33,7 +33,6 @@ public class OrganizationDaoImpl implements OrganizationDao {
 
     @Override
     public List<Organization> loadOrganizations(final String name, final String inn, final Boolean isActive) {
-
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Organization> criteriaQuery = criteriaBuilder.createQuery(Organization.class);
 

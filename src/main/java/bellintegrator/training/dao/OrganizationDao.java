@@ -1,6 +1,5 @@
 package bellintegrator.training.dao;
 
-
 import bellintegrator.training.model.Organization;
 
 import java.util.List;
@@ -14,7 +13,7 @@ public interface OrganizationDao {
      * Получить Organization по идентификатору
      *
      * @param id
-     * @return
+     * @return {@Organization}
      */
     Organization loadByIdOrganization(Long id);
 
@@ -29,7 +28,9 @@ public interface OrganizationDao {
      * Получить Organization по идентификатору
      *
      * @param name
-     * @return
+     * @param inn
+     * @param isActive
+     * @return {@List<Organization>}
      */
     List<Organization> loadOrganizations(String name, String inn, Boolean isActive);
 }

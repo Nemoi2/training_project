@@ -4,7 +4,7 @@ import ma.glasnost.orika.MapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * {@inheritDoc}
@@ -34,11 +34,8 @@ public class MapperFacadeImpl implements MapperFacade {
         mapperFactory.getMapperFacade().map(sourceObject, destinationObject);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public <S, D> Set<D> mapAsSet(Iterable<S> source, Class<D> destinationClass) {
-        return mapperFactory.getMapperFacade().mapAsSet(source, destinationClass);
+    public <S, D> List<D> mapAsList(Iterable<S> source, Class<D> destinationClass) {
+        return mapperFactory.getMapperFacade().mapAsList(source, destinationClass);
     }
 }

@@ -1,6 +1,6 @@
 package bellintegrator.training.model.mapper;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Фасад для преобразования между можелями БД и фронта
@@ -37,5 +37,5 @@ public interface MapperFacade {
      * @param <D>
      * @return
      */
-    <S, D> Set<D> mapAsSet(Iterable<S> source, Class<D> destinationClass);
+    <S, D> List<D> mapAsList(Iterable<S> source, Class<D> destinationClass);
 }

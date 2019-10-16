@@ -1,8 +1,10 @@
 package bellintegrator.training.service;
 
 import bellintegrator.training.dao.OfficeDao;
+import bellintegrator.training.dao.OrganizationDao;
 import bellintegrator.training.exception.CustomNotFoundException;
 import bellintegrator.training.model.Office;
+import bellintegrator.training.model.Organization;
 import bellintegrator.training.model.mapper.MapperFacade;
 import bellintegrator.training.view.OfficesView;
 import bellintegrator.training.view.OfficeView;
@@ -16,18 +18,24 @@ import java.util.List;
 public class OfficeServiceImpl implements OfficeService {
 
     private final OfficeDao officeDao;
+    private final OrganizationDao organizationDao;
     private final MapperFacade mapperFacade;
 
     @Autowired
-    public OfficeServiceImpl(final OfficeDao officeDao, final MapperFacade mapperFacade) {
+    public OfficeServiceImpl(final OfficeDao officeDao, final OrganizationDao organizationDao,
+                             final MapperFacade mapperFacade) {
         this.officeDao = officeDao;
+        this.organizationDao = organizationDao;
         this.mapperFacade = mapperFacade;
     }
 
     @Override
     @Transactional
     public void addOffice(final OfficesView view) {
-        officeDao.saveOffice(mapperFacade.map(view,Office.class));
+        Organization organization = organizationDao.loadByIdOrganization(view.orgId);
+        Office office =  mapperFacade.map(view,Office.class);
+        organization.addOffice(office);
+        officeDao.saveOffice(office);
     }
 
     @Override
@@ -53,7 +61,7 @@ public class OfficeServiceImpl implements OfficeService {
 
     @Override
     @Transactional
-    public List<OfficesView> offices(OfficesView view) {
+    public List<OfficesView> offices(final OfficesView view) {
         List<Office> offices = officeDao.loadOffices(view.orgId, view.name, view.phone, view.isActive);
         return mapperFacade.mapAsList(offices, OfficesView.class);
     }

@@ -30,6 +30,7 @@ public interface OrganizationService {
     /**
      * Получить организацию
      *
+     * @param id
      * @return {@OrganizationView}
      */
     OrganizationView getOrganization(Long id);
@@ -37,7 +38,8 @@ public interface OrganizationService {
     /**
      * Получить список организаций
      *
-     * @return {@OrganizationView}
+     * @param organizationsView
+     * @return {@List<OrganizationsView>}
      */
-    List<OrganizationsView> organizations (OrganizationsView organizationsView);
+    List<OrganizationsView> organizations (@Valid OrganizationsView organizationsView);
 }

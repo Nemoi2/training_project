@@ -30,15 +30,17 @@ public interface OfficeService {
     /**
      * Получить офис
      *
-     * @return {@OrganizationView}
+     * @param id
+     * @return {@OfficeView}
      */
     OfficeView getOffice(Long id);
 
     /**
      * Получить список офисов
      *
-     * @return {@OrganizationView}
+     * @param officesView
+     * @return {@List<OfficesView>}
      */
-    List<OfficesView> offices(OfficesView officesView);
+    List<OfficesView> offices(@Valid OfficesView officesView);
 }
 

@@ -17,7 +17,7 @@ public class CustomMapperFactory implements FactoryBean<MapperFactory> {
     @Override
     public MapperFactory getObject() {
         MapperFactory mapperFactory = new DefaultMapperFactory.Builder()
-                .constructorResolverStrategy(null)
+                .constructorResolverStrategy(null).mapNulls(false)
                 .build();
 
         mapperFactory.classMap(DocumentType.class, DocView.class)

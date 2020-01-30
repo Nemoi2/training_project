@@ -71,8 +71,10 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public List<OfficesView> offices(final OfficesView view) {
-        List<Office> offices = officeDao.findAll(where(hasOrgId(view.orgId)).and(officeName(view.name))
-                .and(officePhone(view.phone)).and(officeActive(view.isActive)));
+        List<Office> offices = officeDao.findAll(where(hasOrgId(view.orgId))
+                .and(officeName(view.name))
+                .and(officePhone(view.phone))
+                .and(officeActive(view.isActive)));
         return mapperFacade.mapAsList(offices, OfficesView.class);
     }
 }

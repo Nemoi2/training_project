@@ -32,7 +32,7 @@ public class HandbookServiceImpl implements HandbookService {
 
     @Override
     @Transactional
-    public List<DocView> contries() {
+    public List<DocView> countries() {
         List<Country> countries = handbookDao.loadCountry();
         return mapperFacade.mapAsList(countries, DocView.class);
     }

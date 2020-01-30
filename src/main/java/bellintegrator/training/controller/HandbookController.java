@@ -32,6 +32,6 @@ public class HandbookController {
     @ApiOperation(value = "Получить страны", httpMethod = "GET")
     @GetMapping("/countries")
     public List<DocView> countries() {
-        return handbookService.contries();
+        return handbookService.countries();
     }
 }

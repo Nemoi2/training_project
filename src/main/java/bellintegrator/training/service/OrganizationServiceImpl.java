@@ -60,7 +60,8 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     @Transactional
     public List<OrganizationsView> organizations(final OrganizationsView view) {
-        List<Organization> organizations = organizationDao.findAll(where(hasName(view.name)).and(hasInn(view.inn))
+        List<Organization> organizations = organizationDao.findAll(where(hasName(view.name))
+                .and(hasInn(view.inn))
                 .and(hasIsActive(view.isActive)));
         return mapperFacade.mapAsList(organizations, OrganizationsView.class);
     }

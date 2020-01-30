@@ -48,7 +48,7 @@ public class UnitTestHandbook {
         docView.name = "Russian Federation";
         docView.code = 643L;
 
-        handbookService.contries();
+        handbookService.countries();
 
         Mockito.verify(handbookDao,Mockito.times(1))
                 .loadCountry();

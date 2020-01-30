@@ -21,5 +21,5 @@ public interface HandbookService {
      *
      * @return {@List<DocView>}
      */
-    List<DocView> contries();
+    List<DocView> countries();
 }

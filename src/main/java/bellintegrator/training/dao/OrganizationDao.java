@@ -26,13 +26,4 @@ public interface OrganizationDao extends JpaRepository<Organization,Long> , JpaS
      * @return
      */
     Organization save(Organization organization);
-
-    /**
-     * Получить Organization по идентификатору
-     *
-     * @param name
-     * @param inn
-     * @param isActive
-     * @return {@List<Organization>}
-     */
 }

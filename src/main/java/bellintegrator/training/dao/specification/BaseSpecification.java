@@ -1,11 +1,14 @@
 package bellintegrator.training.dao.specification;
 
+
 import bellintegrator.training.model.Document;
 import bellintegrator.training.model.Employee;
 import bellintegrator.training.model.Office;
 import bellintegrator.training.model.Organization;
 import org.springframework.data.jpa.domain.Specification;
 
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.Objects;
 
 public interface BaseSpecification<T> {
@@ -74,19 +77,20 @@ public interface BaseSpecification<T> {
         }
         return null;
     }
-    static Specification<Document> employeeDocCode(Long docCode) {
+    static Specification<Employee> employeeDocCode(Long docCode) {
         if (Objects.nonNull(docCode)) {
-            return (documentRoot, cq, cb) -> cb.equal(documentRoot.get("documentType"), docCode);
+            return (employee, cq, cb) -> {
+                Root<Document> docRoot = cq.from(Document.class);
+                Predicate joinPredicate = cb.equal(employee.get("document"), docRoot.get("employee"));
+               return cb.and(joinPredicate, cb.equal( docRoot.get("documentType"), docCode));
+            };
         }
         return null;
     }
-
     static Specification<Employee> employeeCitizenshipCode(Long citizenshipCode) {
         if (Objects.nonNull(citizenshipCode)) {
             return (employee, cq, cb) -> cb.equal(employee.get("country"), citizenshipCode);
         }
         return null;
     }
-
-
 }

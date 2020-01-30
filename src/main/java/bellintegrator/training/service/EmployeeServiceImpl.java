@@ -138,8 +138,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     public List<EmployeeListView> employees(final EmployeeListView view) {
         List<Employee> employees = employeeDao.findAll(where(hasOfficeId(view.officeId)
-                        .and(employeeFirstName(view.firstName)).and(employeeSecondName(view.secondName))
-                        .and(employeeMiddleName(view.middleName)).and(employeePosition(view.position)).and(employeeDocCode(view.docCode)).and(employeeCitizenshipCode(view.citizenshipCode))));
+                .and(employeeFirstName(view.firstName))
+                .and(employeeSecondName(view.secondName))
+                .and(employeeMiddleName(view.middleName))
+                .and(employeePosition(view.position))
+                .and(employeeDocCode(view.docCode))
+                .and(employeeCitizenshipCode(view.citizenshipCode))));
         return mapperFacade.mapAsList(employees, EmployeeListView.class);
     }
 }

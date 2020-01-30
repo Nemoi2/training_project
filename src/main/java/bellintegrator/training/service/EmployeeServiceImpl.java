@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -39,11 +40,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = mapperFacade.map(view, Employee.class);
 
         if (view.officeId != null) {
-            Office office = officeDao.loadByIdOffice(view.officeId);
-            if (office == null) {
-                throw new CustomNotFoundException("Not found office with id is " + view.officeId);
+            Optional<Office> officeOptional = officeDao.findById(view.officeId);
+            if (!officeOptional.isPresent()) {
+                throw new CustomNotFoundException(String.format("Not found office with id is %d", view.officeId));
             }
-            office.addEmployee(employee);
+            officeOptional.get().addEmployee(employee);
         }
         if (view.citizenshipCode != null) {
             Country country = employeeDao.loadByCodeCountry(view.citizenshipCode);
@@ -74,11 +75,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         if (view.officeId != null) {
-            Office office = officeDao.loadByIdOffice(view.officeId);
-            if (office == null) {
-                throw new CustomNotFoundException("Not found office with id is " + view.officeId);
+            Optional<Office> officeOptional = officeDao.findById(view.officeId);
+            if (!officeOptional.isPresent()) {
+                throw new CustomNotFoundException(String.format("Not found office with id is %d", view.officeId));
             }
-            employee.setOffice(office);
+            employee.setOffice(officeOptional.get());
         }
         if (view.citizenshipCode != null) {
             Country country = employeeDao.loadByCodeCountry(view.citizenshipCode);

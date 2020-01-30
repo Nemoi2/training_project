@@ -51,12 +51,10 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Transactional(readOnly = true)
     public OrganizationView getOrganization(final Long id) {
         Optional<Organization> organizationOptional = organizationDao.findById(id);
-        if (organizationOptional.isPresent()) {
-            Organization organization = organizationOptional.get();
-            return mapperFacade.map(organization,OrganizationView.class);
+        if (!organizationOptional.isPresent()) {
+            throw new CustomNotFoundException(String.format("Not found organization with id: %d", id));
         }
-        throw new CustomNotFoundException(String.format("Not found organization with id: %d", id));
-
+        return mapperFacade.map(organizationOptional.get(),OrganizationView.class);
     }
 
     @Override

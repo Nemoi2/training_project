@@ -1,6 +1,6 @@
 package bellintegrator.training.unit;
 
-import bellintegrator.training.dao.OfficeDao;
+/*import bellintegrator.training.dao.OfficeDao;
 import bellintegrator.training.dao.OfficeDaoImpl;
 import bellintegrator.training.exception.CustomNotFoundException;
 import bellintegrator.training.model.Office;
@@ -53,4 +53,4 @@ public class UnitTestOffice {
             throw new CustomNotFoundException("Not found office with id is " + id);
         }
     }
-}
+}*/

@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import static bellintegrator.training.dao.specification.BaseSpecification.*;
+import static org.springframework.data.jpa.domain.Specification.where;
+
 @Service
 public class OfficeServiceImpl implements OfficeService {
 
@@ -33,40 +36,43 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public void addOffice(final OfficesView view) {
-        Optional<Organization> organizationOptional = organizationDao.findById(view.id);
+        Optional<Organization> organizationOptional = organizationDao.findById(view.orgId);
         if (!organizationOptional.isPresent()) {
-            throw new CustomNotFoundException(String.format("Not found organization with id: %d", view.id));
+            throw new CustomNotFoundException(String.format("Not found organization with id: %d", view.orgId));
         }
         Office office =  mapperFacade.map(view,Office.class);
         organizationOptional.get().addOffice(office);
-        officeDao.saveOffice(office);
+        officeDao.save(office);
     }
 
     @Override
     @Transactional
     public void updateOffice(final OfficeView view) {
-        Office office = officeDao.loadByIdOffice(view.id);
-        if (office == null) {
-            throw new CustomNotFoundException("Not found office with id is " + view.id);
+        Optional<Office> officeOptional = officeDao.findById(view.id);
+        if (officeOptional.isPresent()) {
+            Office office = officeOptional.get();
+            mapperFacade.map(view,office);
+            officeDao.save(office);
+        }else {
+            throw new CustomNotFoundException(String.format("Not found office with id is %d", view.id));
         }
-        mapperFacade.map(view,office);
-        officeDao.saveOffice(office);
     }
 
     @Override
     @Transactional(readOnly = true)
     public OfficeView getOffice(final Long id) {
-        Office office = officeDao.loadByIdOffice(id);
-        if (office == null) {
-            throw new CustomNotFoundException("Not found office with id is " + id);
+        Optional<Office> officeOptional = officeDao.findById(id);
+        if (!officeOptional.isPresent()) {
+            throw new CustomNotFoundException(String.format("Not found office with id is %d", id));
         }
-        return mapperFacade.map(office,OfficeView.class);
+        return mapperFacade.map( officeOptional.get(),OfficeView.class);
     }
 
     @Override
     @Transactional
     public List<OfficesView> offices(final OfficesView view) {
-        List<Office> offices = officeDao.loadOffices(view.orgId, view.name, view.phone, view.isActive);
+        List<Office> offices = officeDao.findAll(where(hasOrgId(view.orgId)).and(officeName(view.name))
+                .and(officePhone(view.phone)).and(officeActive(view.isActive)));
         return mapperFacade.mapAsList(offices, OfficesView.class);
     }
 }

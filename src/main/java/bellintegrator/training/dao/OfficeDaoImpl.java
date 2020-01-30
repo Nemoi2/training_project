@@ -13,6 +13,7 @@ import javax.persistence.criteria.Root;
 
 import java.util.List;
 
+/*
 @Repository
 public class OfficeDaoImpl implements OfficeDao {
 
@@ -58,3 +59,4 @@ public class OfficeDaoImpl implements OfficeDao {
         return query.getResultList();
     }
 }
+*/

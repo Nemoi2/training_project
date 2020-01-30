@@ -1,13 +1,17 @@
 package bellintegrator.training.dao;
 
 import bellintegrator.training.model.Office;
+import bellintegrator.training.model.Organization;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * DAO для работы с Office
  */
-public interface OfficeDao {
+public interface OfficeDao extends JpaRepository<Office,Long>, JpaSpecificationExecutor<Office> {
 
     /**
      * Получить Office по идентификатору
@@ -15,14 +19,14 @@ public interface OfficeDao {
      * @param id
      * @return {@Office}
      */
-    Office loadByIdOffice(Long id);
+    Optional<Office> findById(Long id);
 
     /**
      * Сохранить Office
      *
      * @param office
      */
-    void saveOffice(Office office);
+    Office save(Office office);
 
     /**
      * Получить Office по идентификатору
@@ -33,6 +37,5 @@ public interface OfficeDao {
      * @param isActive
      * @return {@List<Office>}
      */
-    List<Office> loadOffices(Long orgId , String name, String phone, Boolean isActive);
 }
 

@@ -1,13 +1,15 @@
 package bellintegrator.training.dao;
 
 import bellintegrator.training.model.Organization;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import java.util.List;
+import java.util.Optional;
 
 /**
  * DAO для работы с Organization
  */
-public interface OrganizationDao {
+public interface OrganizationDao extends JpaRepository<Organization,Long> , JpaSpecificationExecutor<Organization> {
 
     /**
      * Получить Organization по идентификатору
@@ -15,14 +17,15 @@ public interface OrganizationDao {
      * @param id
      * @return {@Organization}
      */
-    Organization loadByIdOrganization(Long id);
+    Optional<Organization> findById (Long id);
 
     /**
      * Сохранить Organization
      *
      * @param organization
+     * @return
      */
-    void saveOrganization(Organization organization);
+    Organization save(Organization organization);
 
     /**
      * Получить Organization по идентификатору
@@ -32,5 +35,4 @@ public interface OrganizationDao {
      * @param isActive
      * @return {@List<Organization>}
      */
-    List<Organization> loadOrganizations(String name, String inn, Boolean isActive);
 }

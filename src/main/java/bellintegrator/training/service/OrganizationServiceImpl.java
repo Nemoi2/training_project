@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+
+import static bellintegrator.training.dao.specification.BaseSpecification.*;
+import static org.springframework.data.jpa.domain.Specification.where;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
@@ -27,34 +31,39 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     @Transactional
     public void addOrganization(final OrganizationView view) {
-        organizationDao.saveOrganization(mapperFacade.map(view,Organization.class));
+        organizationDao.save(mapperFacade.map(view,Organization.class));
     }
 
     @Override
     @Transactional
     public void updateOrganization(final OrganizationView view) {
-        Organization organization = organizationDao.loadByIdOrganization(view.id);
-        if (organization == null) {
-            throw new CustomNotFoundException("Not found organization with id is " + view.id);
+        Optional<Organization> organizationOptional = organizationDao.findById(view.id);
+        if (organizationOptional.isPresent()) {
+            Organization organization = organizationOptional.get();
+            mapperFacade.map(view, organization);
+            organizationDao.save(organization);
+        } else {
+            throw new CustomNotFoundException(String.format("Not found organization with id: %d", view.id));
         }
-        mapperFacade.map(view,organization);
-        organizationDao.saveOrganization(organization);
     }
 
     @Override
     @Transactional(readOnly = true)
     public OrganizationView getOrganization(final Long id) {
-        Organization organization = organizationDao.loadByIdOrganization(id);
-        if (organization == null) {
-            throw new CustomNotFoundException("Not found organization with id is " + id);
+        Optional<Organization> organizationOptional = organizationDao.findById(id);
+        if (organizationOptional.isPresent()) {
+            Organization organization = organizationOptional.get();
+            return mapperFacade.map(organization,OrganizationView.class);
         }
-        return mapperFacade.map(organization,OrganizationView.class);
+        throw new CustomNotFoundException(String.format("Not found organization with id: %d", id));
+
     }
 
     @Override
     @Transactional
     public List<OrganizationsView> organizations(final OrganizationsView view) {
-        List<Organization> organizations = organizationDao.loadOrganizations(view.name, view.inn, view.isActive);
+        List<Organization> organizations = organizationDao.findAll(where(hasName(view.name)).and(hasInn(view.inn))
+                .and(hasIsActive(view.isActive)));
         return mapperFacade.mapAsList(organizations, OrganizationsView.class);
     }
 }

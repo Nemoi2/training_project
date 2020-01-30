@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OfficeServiceImpl implements OfficeService {
@@ -32,9 +33,12 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public void addOffice(final OfficesView view) {
-        Organization organization = organizationDao.loadByIdOrganization(view.orgId);
+        Optional<Organization> organizationOptional = organizationDao.findById(view.id);
+        if (!organizationOptional.isPresent()) {
+            throw new CustomNotFoundException(String.format("Not found organization with id: %d", view.id));
+        }
         Office office =  mapperFacade.map(view,Office.class);
-        organization.addOffice(office);
+        organizationOptional.get().addOffice(office);
         officeDao.saveOffice(office);
     }
 

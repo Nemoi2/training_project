@@ -1,5 +1,7 @@
 package bellintegrator.training.dao.specification;
 
+import bellintegrator.training.model.Document;
+import bellintegrator.training.model.Employee;
 import bellintegrator.training.model.Office;
 import bellintegrator.training.model.Organization;
 import org.springframework.data.jpa.domain.Specification;
@@ -42,4 +44,49 @@ public interface BaseSpecification<T> {
     static Specification<Office> officeActive(Boolean isActive) {
         return (Office, cq, cb) -> cb.equal(Office.get("isActive"),  isActive);
     }
+
+    static Specification<Employee> hasOfficeId(Long officeId) {
+        return (employee, cq, cb) -> cb.equal(employee.get("office"), officeId);
+    }
+
+    static Specification<Employee> employeeFirstName(String firstName) {
+        if (Objects.nonNull(firstName)) {
+            return (employee, cq, cb) -> cb.equal(employee.get("firstName"), firstName);
+        }
+        return null;
+    }
+
+    static Specification<Employee> employeeSecondName(String secondName) {
+        if (Objects.nonNull(secondName)) {
+            return (employee, cq, cb) -> cb.equal(employee.get("secondName"), secondName);
+        }
+        return null;
+    }
+    static Specification<Employee> employeeMiddleName(String middleName) {
+        if (Objects.nonNull(middleName)) {
+            return (employee, cq, cb) -> cb.equal(employee.get("middleName"), middleName);
+        }
+        return null;
+    }
+    static Specification<Employee> employeePosition(String position) {
+        if (Objects.nonNull(position)) {
+            return (employee, cq, cb) -> cb.equal(employee.get("position"), position);
+        }
+        return null;
+    }
+    static Specification<Document> employeeDocCode(Long docCode) {
+        if (Objects.nonNull(docCode)) {
+            return (documentRoot, cq, cb) -> cb.equal(documentRoot.get("documentType"), docCode);
+        }
+        return null;
+    }
+
+    static Specification<Employee> employeeCitizenshipCode(Long citizenshipCode) {
+        if (Objects.nonNull(citizenshipCode)) {
+            return (employee, cq, cb) -> cb.equal(employee.get("country"), citizenshipCode);
+        }
+        return null;
+    }
+
+
 }

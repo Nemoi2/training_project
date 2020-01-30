@@ -1,5 +1,7 @@
 package bellintegrator.training.service;
 
+import bellintegrator.training.dao.CountryDao;
+import bellintegrator.training.dao.DocumentTypeDao;
 import bellintegrator.training.dao.EmployeeDao;
 import bellintegrator.training.dao.OfficeDao;
 import bellintegrator.training.exception.CustomNotFoundException;
@@ -19,18 +21,26 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import static bellintegrator.training.dao.specification.BaseSpecification.*;
+import static org.springframework.data.jpa.domain.Specification.where;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final OfficeDao officeDao;
     private final EmployeeDao employeeDao;
+    private final DocumentTypeDao documentTypeDao;
+    private final CountryDao countryDao;
     private final MapperFacade mapperFacade;
 
     @Autowired
     public EmployeeServiceImpl(final OfficeDao officeDao, final EmployeeDao employeeDao,
-                             final MapperFacade mapperFacade) {
+                               final DocumentTypeDao documentTypeDao, final CountryDao countryDao,
+                               final MapperFacade mapperFacade) {
         this.officeDao = officeDao;
         this.employeeDao = employeeDao;
+        this.documentTypeDao = documentTypeDao;
+        this.countryDao = countryDao;
         this.mapperFacade = mapperFacade;
     }
 
@@ -47,14 +57,14 @@ public class EmployeeServiceImpl implements EmployeeService {
             officeOptional.get().addEmployee(employee);
         }
         if (view.citizenshipCode != null) {
-            Country country = employeeDao.loadByCodeCountry(view.citizenshipCode);
+            Country country = countryDao.findByCitizenshipCode(view.citizenshipCode);
             if (country == null) {
                 throw new CustomNotFoundException("Not found country with code is " + view.citizenshipCode);
             }
             employee.setCountry(country);
         }
         if (view.docCode != null) {
-            DocumentType documentType = employeeDao.loadByCodeDocumentType(view.docCode);
+            DocumentType documentType = documentTypeDao.findByDocCode(view.docCode);
             if (documentType == null) {
                 throw new CustomNotFoundException("Not found documentType with code is " + view.docCode);
             }
@@ -63,16 +73,18 @@ public class EmployeeServiceImpl implements EmployeeService {
             document.setEmployee(employee);
             employee.setDocument(document);
         }
-        employeeDao.saveEmployee(employee);
+        employeeDao.save(employee);
     }
 
     @Override
     @Transactional
     public void updateEmployee(final EmployeeView view) {
-        Employee employee = employeeDao.loadByIdEmployee(view.id);
-        if (employee == null) {
-            throw new CustomNotFoundException("Not found user with id is " + view.id);
+        Optional<Employee>  optionalEmployee = employeeDao.findById(view.id);
+        if (!optionalEmployee.isPresent()) {
+            throw new CustomNotFoundException(String.format("Not found organization with id is %d", view.id));
         }
+
+        Employee employee = optionalEmployee.get();
 
         if (view.officeId != null) {
             Optional<Office> officeOptional = officeDao.findById(view.officeId);
@@ -82,7 +94,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setOffice(officeOptional.get());
         }
         if (view.citizenshipCode != null) {
-            Country country = employeeDao.loadByCodeCountry(view.citizenshipCode);
+            Country country = countryDao.findByCitizenshipCode(view.citizenshipCode);
             if (country == null) {
                 throw new CustomNotFoundException("Not found country with id is " + view.citizenshipCode);
             }
@@ -97,17 +109,17 @@ public class EmployeeServiceImpl implements EmployeeService {
             document.setEmployee(employee);
             employee.setDocument(document);
         }
-        employeeDao.saveEmployee(employee);
+        employeeDao.save(employee);
     }
 
     @Override
     @Transactional(readOnly = true)
     public EmployeeView getEmployee(final Long id) {
-        Employee employee = employeeDao.loadByIdEmployee(id);
-
-        if (employee == null) {
-            throw new CustomNotFoundException("Not found user with id is " + id);
+        Optional<Employee>  optionalEmployee = employeeDao.findById(id);
+        if (!optionalEmployee.isPresent()) {
+            throw new CustomNotFoundException(String.format("Not found organization with id is %d", id));
         }
+        Employee employee = optionalEmployee.get();
         EmployeeView view = mapperFacade.map(employee,EmployeeView.class);
 
         if (employee.getDocument() != null) {
@@ -125,8 +137,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public List<EmployeeListView> employees(final EmployeeListView view) {
-        List<Employee> employees = employeeDao.loadEmployees(view.officeId, view.firstName, view.secondName,
-                view.middleName, view.position, view.docCode, view.citizenshipCode);
+        List<Employee> employees = employeeDao.findAll(where(hasOfficeId(view.officeId)
+                        .and(employeeFirstName(view.firstName)).and(employeeSecondName(view.secondName))
+                        .and(employeeMiddleName(view.middleName)).and(employeePosition(view.position)).and(employeeDocCode(view.docCode)).and(employeeCitizenshipCode(view.citizenshipCode))));
         return mapperFacade.mapAsList(employees, EmployeeListView.class);
     }
 }

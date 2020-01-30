@@ -15,7 +15,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-@Repository
+/*@Repository
 public class EmployeeDaoImpl implements EmployeeDao {
 
     private final EntityManager em;
@@ -88,4 +88,4 @@ public class EmployeeDaoImpl implements EmployeeDao {
         TypedQuery<Employee> query = em.createQuery(criteriaQuery);
         return query.getResultList();
     }
-}
+}*/

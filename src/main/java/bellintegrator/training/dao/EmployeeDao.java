@@ -3,13 +3,17 @@ package bellintegrator.training.dao;
 import bellintegrator.training.model.Country;
 import bellintegrator.training.model.DocumentType;
 import bellintegrator.training.model.Employee;
+import bellintegrator.training.model.Office;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * DAO для работы с Employee
  */
-public interface EmployeeDao {
+public interface EmployeeDao extends JpaRepository<Employee,Long>, JpaSpecificationExecutor<Employee> {
 
     /**
      * Получить Employee по идентификатору
@@ -17,30 +21,30 @@ public interface EmployeeDao {
      * @param id
      * @return {@Employee}
      */
-    Employee loadByIdEmployee(Long id);
+    Optional<Employee> findById(Long id);
 
-    /**
+/*    *//**
      * Получить DocumentType по идентификатору
      *
-     * @param code
+     * @param docCode
      * @return {@DocumentType}
-     */
-    DocumentType loadByCodeDocumentType(Long code);
+     *//*
+    DocumentType findByDocCode(Long docCode);
 
-    /**
+    *//**
      * Получить Country по идентификатору
      *
      * @param code
      * @return {@Country}
-     */
-    Country loadByCodeCountry (Long code);
+     *//*
+    Country loadByCodeCountry (Long code);*/
 
     /**
      * Сохранить Employee
      *
      * @param employee
      */
-    void saveEmployee(Employee employee);
+    Employee save(Employee employee);
 
     /**
      * Получить список Employee

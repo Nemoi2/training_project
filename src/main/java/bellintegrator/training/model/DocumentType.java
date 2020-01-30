@@ -1,5 +1,7 @@
 package bellintegrator.training.model;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,6 +11,7 @@ import javax.persistence.Version;
 /**
  * Тип документа
  */
+@Data
 @Entity
 @Table(name = "Doc_Type")
 public class DocumentType {
@@ -29,28 +32,4 @@ public class DocumentType {
      */
     @Column(name = "name")
     private String name;
-
-    public DocumentType() {
-    }
-
-    public DocumentType(final Long docCode, final String name) {
-        this.docCode = docCode;
-        this.name = name;
-    }
-
-    public Long getDocCode() {
-        return docCode;
-    }
-
-    public void setDocCode(final Long docCode) {
-        this.docCode = docCode;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String docName) {
-        this.name = name;
-    }
 }

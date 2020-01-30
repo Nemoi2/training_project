@@ -1,5 +1,9 @@
 package bellintegrator.training.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -17,6 +21,9 @@ import java.util.Date;
 /**
  * Документ
  */
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "Document")
 public class Document {
@@ -58,55 +65,4 @@ public class Document {
     @ManyToOne
     @JoinColumn(name = "doc_type_id")
     private DocumentType documentType;
-
-    public Document() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDocName() {
-        return docName;
-    }
-
-    public void setDocName(final String docName) {
-        this.docName = docName;
-    }
-
-    public String getDocNumber() {
-        return docNumber;
-    }
-
-    public void setDocNumber(final String docNumber) {
-        this.docNumber = docNumber;
-    }
-
-    public Date getDocDate() {
-        return docDate;
-    }
-
-    public void setDocDate(final Date docDate) {
-        this.docDate = docDate;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(final Employee employee) {
-        this.employee = employee;
-    }
-
-    public DocumentType getDocumentType() {
-        return documentType;
-    }
-
-    public void setDocumentType(final DocumentType documentType) {
-        this.documentType = documentType;
-    }
 }

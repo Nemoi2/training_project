@@ -1,5 +1,9 @@
 package bellintegrator.training.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -16,6 +20,8 @@ import java.util.Set;
 /**
  * Организация
  */
+@Data
+@EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "Organization")
 public class Organization {
@@ -77,86 +83,6 @@ public class Organization {
     @OneToMany(mappedBy = "organization",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Office> offices;
 
-    public Organization() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(final String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getInn() {
-        return inn;
-    }
-
-    public void setInn(final String inn) {
-        this.inn = inn;
-    }
-
-    public String getKpp() {
-        return kpp;
-    }
-
-    public void setKpp(final String kpp) {
-        this.kpp = kpp;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(final String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(final String phone) {
-        this.phone = phone;
-    }
-
-    public Boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(final Boolean active) {
-        isActive = active;
-    }
-
-    public Set<Office> getOffices() {
-        if (offices == null) {
-            offices = new HashSet<>();
-        }
-        return offices;
-    }
-
-    public void setOffices(final Set<Office> offices) {
-        this.offices = offices;
-        for(Office office: getOffices()) {
-            office.setOrganization(this);
-        }
-    }
 
     public void addOffice(final Office office) {
         getOffices().add(office);
@@ -167,16 +93,4 @@ public class Organization {
         getOffices().remove(office);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Organization organization = (Organization) obj;
-        return id == organization.id;
-    }
 }

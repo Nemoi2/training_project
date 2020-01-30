@@ -1,5 +1,9 @@
 package bellintegrator.training.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -16,6 +20,9 @@ import javax.persistence.FetchType;
 /**
  * Сотрудник
  */
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "Employee")
 public class Employee {
@@ -78,87 +85,4 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
-
-    public Employee() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(final String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public void setSecondName(final String secondName) {
-        this.secondName = secondName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(final String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(final String position) {
-        this.position = position;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(final String phone) {
-        this.phone = phone;
-    }
-
-    public Boolean getIsIdentified() {
-        return isIdentified;
-    }
-
-    public void setIsIdentified(final Boolean identified) {
-        isIdentified = identified;
-    }
-
-    public Document getDocument() {
-        return document;
-    }
-
-    public void setDocument(final Document document) {
-        this.document = document;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(final Country country) {
-        this.country = country;
-    }
-
-    public Office getOffice() {
-        return office;
-    }
-
-    public void setOffice(final Office office) {
-        this.office = office;
-    }
 }

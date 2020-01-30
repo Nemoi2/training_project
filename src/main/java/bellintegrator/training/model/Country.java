@@ -1,5 +1,7 @@
 package bellintegrator.training.model;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,6 +11,7 @@ import javax.persistence.Version;
 /**
  * Страны
  */
+@Data
 @Entity
 @Table(name = "Country")
 public class Country {
@@ -29,23 +32,4 @@ public class Country {
      */
     @Column(name = "citizenship_name")
     private String citizenshipName;
-
-    public Country() {
-    }
-
-    public Long getCitizenshipCode() {
-        return citizenshipCode;
-    }
-
-    public void setCitizenshipCode(final Long citizenshipCode) {
-        this.citizenshipCode = citizenshipCode;
-    }
-
-    public String getCitizenshipName() {
-        return citizenshipName;
-    }
-
-    public void setCitizenshipName(final String citizenshipName) {
-        this.citizenshipName = citizenshipName;
-    }
 }

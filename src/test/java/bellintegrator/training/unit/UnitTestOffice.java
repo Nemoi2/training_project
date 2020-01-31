@@ -1,7 +1,7 @@
 package bellintegrator.training.unit;
 
-/*import bellintegrator.training.dao.OfficeDao;
-import bellintegrator.training.dao.OfficeDaoImpl;
+/*import bellintegrator.training.repository.OfficeRepository;
+import bellintegrator.training.repository.OfficeDaoImpl;
 import bellintegrator.training.exception.CustomNotFoundException;
 import bellintegrator.training.model.Office;
 import bellintegrator.training.model.mapper.MapperFacade;
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.mock;
 public class UnitTestOffice {
 
     @Mock
-    OfficeDao officeDao = mock(OfficeDaoImpl.class);
+    OfficeRepository officeDao = mock(OfficeDaoImpl.class);
 
     MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 

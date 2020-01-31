@@ -1,26 +1,11 @@
 package bellintegrator.training.unit;
 
-import bellintegrator.training.dao.OrganizationDao;
-import bellintegrator.training.exception.CustomNotFoundException;
-import bellintegrator.training.model.Organization;
-import bellintegrator.training.model.mapper.MapperFacade;
-import bellintegrator.training.model.mapper.MapperFacadeImpl;
-import ma.glasnost.orika.MapperFactory;
-import bellintegrator.training.service.OrganizationService;
-import bellintegrator.training.service.OrganizationServiceImpl;
-import bellintegrator.training.view.OrganizationView;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
-import org.junit.Assert;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-
 import static org.mockito.Mockito.mock;
 
 public class UnitTestOrganization {
 
 /*    @Mock
-    OrganizationDao organizationDao = mock(OrganizationDaoImpl.class);
+    OrganizationRepository organizationDao = mock(OrganizationDaoImpl.class);
 
     MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 

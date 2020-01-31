@@ -1,8 +1,8 @@
 package bellintegrator.training.unit;
 
 /*
-import bellintegrator.training.dao.EmployeeDao;
-import bellintegrator.training.dao.EmployeeDaoImpl;
+import bellintegrator.training.repository.EmployeeRepository;
+import bellintegrator.training.repository.EmployeeDaoImpl;
 import bellintegrator.training.exception.CustomNotFoundException;
 import bellintegrator.training.model.Employee;
 import bellintegrator.training.model.mapper.MapperFacade;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.mock;
 public class UnitTestEmployee {
 
     @Mock
-    EmployeeDao employeeDao = mock(EmployeeDaoImpl.class);
+    EmployeeRepository employeeDao = mock(EmployeeDaoImpl.class);
 
     MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 

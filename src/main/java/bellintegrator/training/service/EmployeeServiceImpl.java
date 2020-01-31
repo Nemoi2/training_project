@@ -81,7 +81,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void updateEmployee(final EmployeeView view) {
         Optional<Employee>  optionalEmployee = employeeRepository.findById(view.id);
         if (!optionalEmployee.isPresent()) {
-            throw new CustomNotFoundException(String.format("Not found organization with id is %d", view.id));
+            throw new CustomNotFoundException(String.format("Not found user with id is %d", view.id));
         }
 
         Employee employee = optionalEmployee.get();
@@ -117,7 +117,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeView getEmployee(final Long id) {
         Optional<Employee>  optionalEmployee = employeeRepository.findById(id);
         if (!optionalEmployee.isPresent()) {
-            throw new CustomNotFoundException(String.format("Not found organization with id is %d", id));
+            throw new CustomNotFoundException(String.format("Not found user with id is %d", id));
         }
         Employee employee = optionalEmployee.get();
         EmployeeView view = mapperFacade.map(employee,EmployeeView.class);

@@ -1,12 +1,10 @@
 package bellintegrator.training.unit;
 
-/*
-import bellintegrator.training.repository.EmployeeRepository;
-import bellintegrator.training.repository.EmployeeDaoImpl;
 import bellintegrator.training.exception.CustomNotFoundException;
 import bellintegrator.training.model.Employee;
 import bellintegrator.training.model.mapper.MapperFacade;
 import bellintegrator.training.model.mapper.MapperFacadeImpl;
+import bellintegrator.training.repository.EmployeeRepository;
 import bellintegrator.training.view.EmployeeView;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
@@ -14,12 +12,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import java.util.Optional;
+
 import static org.mockito.Mockito.mock;
 
 public class UnitTestEmployee {
 
     @Mock
-    EmployeeRepository employeeDao = mock(EmployeeDaoImpl.class);
+    EmployeeRepository employeeRepository = mock(EmployeeRepository.class);
 
     MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 
@@ -49,10 +49,9 @@ public class UnitTestEmployee {
     public void getEmployeeFailTest() {
         Long id = 1L;
 
-        Employee employee = employeeDao.loadByIdEmployee(id);
-        if (employee == null) {
-            throw new CustomNotFoundException("Not found employee with id is " + id);
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if (!employee.isPresent()) {
+            throw new CustomNotFoundException(String.format("Not found employee with id is %d", id));
         }
     }
 }
-*/

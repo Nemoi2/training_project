@@ -43,7 +43,7 @@ public class IntegrationTestEmployee {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString
-                        ("error\":\"Ошибка Сервера: Not found user with id is 5")));
+                        ("{\"error\":\"Ошибка Сервера: Not found user with id is 5\"}")));
     }
 
     @Test

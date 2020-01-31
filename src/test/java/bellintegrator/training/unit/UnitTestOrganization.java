@@ -1,20 +1,37 @@
 package bellintegrator.training.unit;
 
+import bellintegrator.training.exception.CustomNotFoundException;
+import bellintegrator.training.model.Organization;
+import bellintegrator.training.model.mapper.MapperFacade;
+import bellintegrator.training.model.mapper.MapperFacadeImpl;
+import bellintegrator.training.repository.OrganizationRepository;
+import bellintegrator.training.service.OrganizationService;
+import bellintegrator.training.service.OrganizationServiceImpl;
+import bellintegrator.training.view.OrganizationView;
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
+import org.junit.Assert;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+
+import java.util.Optional;
+
 import static org.mockito.Mockito.mock;
 
 public class UnitTestOrganization {
 
-/*    @Mock
-    OrganizationRepository organizationDao = mock(OrganizationDaoImpl.class);
+    @Mock
+    OrganizationRepository organizationRepository = mock(OrganizationRepository.class);
 
     MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 
     MapperFacade mapperFacade = new MapperFacadeImpl(mapperFactory);
 
-    OrganizationService organizationService = new OrganizationServiceImpl(organizationDao,mapperFacade);
+    OrganizationService organizationService = new OrganizationServiceImpl(organizationRepository,mapperFacade);
 
     @Test
-    public void addOrganizationTest() throws Exception {
+    public void addOrganizationTest() {
 
         OrganizationView organizationView = new OrganizationView();
 
@@ -28,8 +45,8 @@ public class UnitTestOrganization {
 
         organizationService.addOrganization(organizationView);
 
-        Mockito.verify(organizationDao,Mockito.times(1))
-                .saveOrganization(mapperFacade.map(organizationView,Organization.class));
+        Mockito.verify(organizationRepository,Mockito.times(1))
+                .save(mapperFacade.map(organizationView, Organization.class));
     }
 
     @Test
@@ -62,9 +79,9 @@ public class UnitTestOrganization {
     public void getOrganizationFailTest() {
         Long id = 1L;
 
-        Organization organization = organizationDao.loadByIdOrganization(id);
-        if (organization == null) {
-            throw new CustomNotFoundException("Not found organization with id is " + id);
+        Optional<Organization> organization = organizationRepository.findById(id);
+        if (!organization.isPresent()) {
+            throw new CustomNotFoundException(String.format("Not found organization with id is %d",id));
         }
-    }*/
+    }
 }

@@ -2,6 +2,8 @@ package bellintegrator.training.unit;
 
 import bellintegrator.training.model.mapper.MapperFacade;
 import bellintegrator.training.model.mapper.MapperFacadeImpl;
+import bellintegrator.training.repository.CountryRepository;
+import bellintegrator.training.repository.DocumentTypeRepository;
 import bellintegrator.training.service.HandbookService;
 import bellintegrator.training.service.HandbookServiceImpl;
 import bellintegrator.training.view.DocView;
@@ -13,43 +15,39 @@ import org.mockito.Mockito;
 
 import static org.mockito.Mockito.mock;
 
-/*
 public class UnitTestHandbook {
 
     @Mock
-    HandbookDao handbookDao = mock(HandbookDaoImpl.class);
+    CountryRepository countryRepository = mock(CountryRepository.class);
+    @Mock
+    DocumentTypeRepository documentTypeRepository = mock(DocumentTypeRepository.class);
 
     MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
-
     MapperFacade mapperFacade = new MapperFacadeImpl(mapperFactory);
 
-    HandbookService handbookService = new HandbookServiceImpl(handbookDao,mapperFacade);
+    HandbookService handbookService = new HandbookServiceImpl(documentTypeRepository,countryRepository,mapperFacade);
 
     @Test
     public void docsTest() throws Exception {
 
         DocView docView = new DocView();
-
         docView.name = "military ID";
         docView.code = 7L;
 
         handbookService.docs();
-
-        Mockito.verify(handbookDao,Mockito.times(1))
-                .loadDocumentType();
+        Mockito.verify(documentTypeRepository,Mockito.times(1))
+                .findAll();
     }
 
     @Test
     public void countriesTest() throws Exception {
 
         DocView docView = new DocView();
-
         docView.name = "Russian Federation";
         docView.code = 643L;
 
         handbookService.countries();
-
-        Mockito.verify(handbookDao,Mockito.times(1))
-                .loadCountry();
+        Mockito.verify(countryRepository,Mockito.times(1))
+                .findAll();
     }
-}*/
+}

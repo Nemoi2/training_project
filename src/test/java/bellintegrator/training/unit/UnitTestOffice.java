@@ -1,11 +1,10 @@
 package bellintegrator.training.unit;
 
-/*import bellintegrator.training.repository.OfficeRepository;
-import bellintegrator.training.repository.OfficeDaoImpl;
 import bellintegrator.training.exception.CustomNotFoundException;
 import bellintegrator.training.model.Office;
 import bellintegrator.training.model.mapper.MapperFacade;
 import bellintegrator.training.model.mapper.MapperFacadeImpl;
+import bellintegrator.training.repository.OfficeRepository;
 import bellintegrator.training.view.OfficesView;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
@@ -13,19 +12,20 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import java.util.Optional;
+
 import static org.mockito.Mockito.mock;
 
 public class UnitTestOffice {
 
     @Mock
-    OfficeRepository officeDao = mock(OfficeDaoImpl.class);
+    OfficeRepository officeRepository = mock(OfficeRepository.class);
 
     MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
-
     MapperFacade mapperFacade = new MapperFacadeImpl(mapperFactory);
 
     @Test
-    public void mapperOfficeTest() throws Exception {
+    public void mapperOfficeTest()  {
 
         OfficesView officesView = new OfficesView();
 
@@ -48,9 +48,9 @@ public class UnitTestOffice {
     public void getOfficeFailTest() {
         Long id = 1L;
 
-        Office office = officeDao.loadByIdOffice(id);
-        if (office == null) {
-            throw new CustomNotFoundException("Not found office with id is " + id);
+        Optional<Office> office = officeRepository.findById(id);
+        if (!office.isPresent()) {
+            throw new CustomNotFoundException(String.format("Not found office with id is %d", id));
         }
     }
-}*/
+}

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
- * DAO для работы с Office
+ * Repository для работы с Office
  */
 @Repository
 public interface OfficeRepository extends JpaRepository<Office,Long>, JpaSpecificationExecutor<Office> {
@@ -25,6 +25,7 @@ public interface OfficeRepository extends JpaRepository<Office,Long>, JpaSpecifi
      * Сохранить Office
      *
      * @param office
+     * @return {@Office}
      */
     Office save(Office office);
 }

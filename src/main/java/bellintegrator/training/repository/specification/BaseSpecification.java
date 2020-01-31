@@ -10,6 +10,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.Objects;
 
+/**
+ * Specification для работы с criteria
+ */
 public interface BaseSpecification<T> {
 
     static Specification<Organization> hasName(String name) {

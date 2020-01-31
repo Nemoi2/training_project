@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
- * DAO для работы с Organization
+ * Repository для работы с Organization
  */
 @Repository
 public interface OrganizationRepository extends JpaRepository<Organization,Long> , JpaSpecificationExecutor<Organization> {

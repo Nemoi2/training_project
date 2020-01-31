@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * DAO для работы с DocumentType
+ * Repository для работы с DocumentType
  */
 @Repository
 public interface DocumentTypeRepository extends JpaRepository<DocumentType,Long> {

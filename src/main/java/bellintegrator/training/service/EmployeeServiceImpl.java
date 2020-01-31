@@ -1,9 +1,9 @@
 package bellintegrator.training.service;
 
-import bellintegrator.training.dao.CountryDao;
-import bellintegrator.training.dao.DocumentTypeDao;
-import bellintegrator.training.dao.EmployeeDao;
-import bellintegrator.training.dao.OfficeDao;
+import bellintegrator.training.repository.CountryRepository;
+import bellintegrator.training.repository.DocumentTypeRepository;
+import bellintegrator.training.repository.EmployeeRepository;
+import bellintegrator.training.repository.OfficeRepository;
 import bellintegrator.training.exception.CustomNotFoundException;
 import bellintegrator.training.model.Country;
 import bellintegrator.training.model.Document;
@@ -21,26 +21,26 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import static bellintegrator.training.dao.specification.BaseSpecification.*;
+import static bellintegrator.training.repository.specification.BaseSpecification.*;
 import static org.springframework.data.jpa.domain.Specification.where;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final OfficeDao officeDao;
-    private final EmployeeDao employeeDao;
-    private final DocumentTypeDao documentTypeDao;
-    private final CountryDao countryDao;
+    private final OfficeRepository officeRepository;
+    private final EmployeeRepository employeeRepository;
+    private final DocumentTypeRepository documentTypeRepository;
+    private final CountryRepository countryRepository;
     private final MapperFacade mapperFacade;
 
     @Autowired
-    public EmployeeServiceImpl(final OfficeDao officeDao, final EmployeeDao employeeDao,
-                               final DocumentTypeDao documentTypeDao, final CountryDao countryDao,
+    public EmployeeServiceImpl(final OfficeRepository officeRepository, final EmployeeRepository employeeRepository,
+                               final DocumentTypeRepository documentTypeRepository, final CountryRepository countryRepository,
                                final MapperFacade mapperFacade) {
-        this.officeDao = officeDao;
-        this.employeeDao = employeeDao;
-        this.documentTypeDao = documentTypeDao;
-        this.countryDao = countryDao;
+        this.officeRepository = officeRepository;
+        this.employeeRepository = employeeRepository;
+        this.documentTypeRepository = documentTypeRepository;
+        this.countryRepository = countryRepository;
         this.mapperFacade = mapperFacade;
     }
 
@@ -50,21 +50,21 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = mapperFacade.map(view, Employee.class);
 
         if (view.officeId != null) {
-            Optional<Office> officeOptional = officeDao.findById(view.officeId);
+            Optional<Office> officeOptional = officeRepository.findById(view.officeId);
             if (!officeOptional.isPresent()) {
                 throw new CustomNotFoundException(String.format("Not found office with id is %d", view.officeId));
             }
             officeOptional.get().addEmployee(employee);
         }
         if (view.citizenshipCode != null) {
-            Country country = countryDao.findByCitizenshipCode(view.citizenshipCode);
+            Country country = countryRepository.findByCitizenshipCode(view.citizenshipCode);
             if (country == null) {
                 throw new CustomNotFoundException("Not found country with code is " + view.citizenshipCode);
             }
             employee.setCountry(country);
         }
         if (view.docCode != null) {
-            DocumentType documentType = documentTypeDao.findByDocCode(view.docCode);
+            DocumentType documentType = documentTypeRepository.findByDocCode(view.docCode);
             if (documentType == null) {
                 throw new CustomNotFoundException("Not found documentType with code is " + view.docCode);
             }
@@ -73,13 +73,13 @@ public class EmployeeServiceImpl implements EmployeeService {
             document.setEmployee(employee);
             employee.setDocument(document);
         }
-        employeeDao.save(employee);
+        employeeRepository.save(employee);
     }
 
     @Override
     @Transactional
     public void updateEmployee(final EmployeeView view) {
-        Optional<Employee>  optionalEmployee = employeeDao.findById(view.id);
+        Optional<Employee>  optionalEmployee = employeeRepository.findById(view.id);
         if (!optionalEmployee.isPresent()) {
             throw new CustomNotFoundException(String.format("Not found organization with id is %d", view.id));
         }
@@ -87,14 +87,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = optionalEmployee.get();
 
         if (view.officeId != null) {
-            Optional<Office> officeOptional = officeDao.findById(view.officeId);
+            Optional<Office> officeOptional = officeRepository.findById(view.officeId);
             if (!officeOptional.isPresent()) {
                 throw new CustomNotFoundException(String.format("Not found office with id is %d", view.officeId));
             }
             employee.setOffice(officeOptional.get());
         }
         if (view.citizenshipCode != null) {
-            Country country = countryDao.findByCitizenshipCode(view.citizenshipCode);
+            Country country = countryRepository.findByCitizenshipCode(view.citizenshipCode);
             if (country == null) {
                 throw new CustomNotFoundException("Not found country with id is " + view.citizenshipCode);
             }
@@ -109,13 +109,13 @@ public class EmployeeServiceImpl implements EmployeeService {
             document.setEmployee(employee);
             employee.setDocument(document);
         }
-        employeeDao.save(employee);
+        employeeRepository.save(employee);
     }
 
     @Override
     @Transactional(readOnly = true)
     public EmployeeView getEmployee(final Long id) {
-        Optional<Employee>  optionalEmployee = employeeDao.findById(id);
+        Optional<Employee>  optionalEmployee = employeeRepository.findById(id);
         if (!optionalEmployee.isPresent()) {
             throw new CustomNotFoundException(String.format("Not found organization with id is %d", id));
         }
@@ -137,7 +137,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public List<EmployeeListView> employees(final EmployeeListView view) {
-        List<Employee> employees = employeeDao.findAll(where(hasOfficeId(view.officeId)
+        List<Employee> employees = employeeRepository.findAll(where(hasOfficeId(view.officeId)
                 .and(employeeFirstName(view.firstName))
                 .and(employeeSecondName(view.secondName))
                 .and(employeeMiddleName(view.middleName))

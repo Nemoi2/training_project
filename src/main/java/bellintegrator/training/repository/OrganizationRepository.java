@@ -1,15 +1,17 @@
-package bellintegrator.training.dao;
+package bellintegrator.training.repository;
 
 import bellintegrator.training.model.Organization;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 /**
  * DAO для работы с Organization
  */
-public interface OrganizationDao extends JpaRepository<Organization,Long> , JpaSpecificationExecutor<Organization> {
+@Repository
+public interface OrganizationRepository extends JpaRepository<Organization,Long> , JpaSpecificationExecutor<Organization> {
 
     /**
      * Получить Organization по идентификатору

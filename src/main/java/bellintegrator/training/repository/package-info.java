@@ -6,4 +6,4 @@
  *
  * Возвращает Entity, как результат запроса в бд.
  */
-package bellintegrator.training.dao;
+package bellintegrator.training.repository;

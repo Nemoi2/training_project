@@ -1,5 +1,4 @@
-package bellintegrator.training.dao.specification;
-
+package bellintegrator.training.repository.specification;
 
 import bellintegrator.training.model.Document;
 import bellintegrator.training.model.Employee;

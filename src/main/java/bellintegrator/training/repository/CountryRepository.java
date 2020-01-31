@@ -1,9 +1,11 @@
-package bellintegrator.training.dao;
+package bellintegrator.training.repository;
 
 import bellintegrator.training.model.Country;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface CountryDao extends JpaRepository<Country,Long> {
+@Repository
+public interface CountryRepository extends JpaRepository<Country,Long> {
 
     /**
      * Получить Country по идентификатору

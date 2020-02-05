@@ -11,7 +11,7 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-@RestControllerAdvice
+/*@RestControllerAdvice
 public class DataOutputController implements ResponseBodyAdvice<Object> {
 
     @Override
@@ -32,4 +32,4 @@ public class DataOutputController implements ResponseBodyAdvice<Object> {
         }
         return new DataView(o);
     }
-}
+}*/

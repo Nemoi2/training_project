@@ -1,10 +1,12 @@
 package bellintegrator.training.view;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+@Data
 public class OrganizationView {
 
     @ApiModelProperty(value = "Уникальный идентификатор", hidden = true, example = "1")
@@ -40,10 +42,4 @@ public class OrganizationView {
     public String phone;
 
     public Boolean isActive = true;
-
-    @Override
-    public String toString() {
-        return "{id:" + id + ";name:" + name + ";fullName" + fullName + ";inn" + inn + ";kpp" + kpp
-                + ";address" + address + ";phone" + phone + ";isActive" + isActive + "}";
-    }
 }

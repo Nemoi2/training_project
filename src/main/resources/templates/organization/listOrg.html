@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List of organization</title>
+</head>
+<body>
+<div>
+    <h1>List of organization</h1>
+    <form action="#" th:action="@{/organization/listOrg}" th:object="${organizationsView}" method="post">
+        <p>Name: <input type="text" th:field="*{name}" /></p>
+        <br/>
+        <p>Inn: <input type="text" th:field="*{inn}" /></p>
+        <br/>
+        <p>isActive: <input type="text" th:field="*{isActive}" /></p>
+        <br/>
+        <p><input type="submit" value="Send" /></p>
+    </form>
+</div>
+</body>
+</html>

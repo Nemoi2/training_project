@@ -2,10 +2,12 @@ package bellintegrator.training.view;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+@Data
 public class OrganizationsView {
 
     @ApiModelProperty(value = "Уникальный идентификатор", hidden = true, example = "1")

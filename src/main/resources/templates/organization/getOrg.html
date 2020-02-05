@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Get Organization</title>
+</head>
+<body>
+<div>
+    <h1>Get organization</h1>
+    <form action="#" th:action="@{/organization/getOrg}" th:object="${organizationView}" method="post">
+        <p>Id: <input type="text" th:field="*{id}"/></p>
+        <br/>
+        <p><input type="submit" value="Send"/></p>
+    </form>
+</div>
+</body>
+</html>

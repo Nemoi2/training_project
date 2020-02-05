@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+</head>
+<body>
+<h1>Result</h1>
+<br/><br/>
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>inn</th>
+        <th>isActive</th>
+    </tr>
+    <tr th:each ="organizationsView : ${organizationView}">
+        <td th:utext="${organizationsView.id}">...</td>
+        <td th:utext="${organizationsView.name}">...</td>
+        <td th:utext="${organizationsView.inn}">...</td>
+        <td th:utext="${organizationsView.isActive}">...</td>
+    </tr>
+</table>
+</div>
+<div><a th:href="@{/organization}">Back</a></div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add organization</title>
+</head>
+<body>
+<div>
+    <h1>Add organization</h1>
+    <form action="#" th:action="@{/organization/addOrg}" th:object="${organizationView}" method="post">
+        <p>Name: <input type="text" th:field="*{name}" /></p>
+        <br/>
+        <p>FullName: <input type="text" th:field="*{fullName}" /></p>
+        <br/>
+        <p>Inn: <input type="text" th:field="*{inn}" /></p>
+        <br/>
+        <p>Kpp: <input type="text" th:field="*{kpp}" /></p>
+        <br/>
+        <p>Address: <input type="text" th:field="*{address}" /></p>
+        <br/>
+        <p>Phone: <input type="text" th:field="*{phone}" /></p>
+        <br/>
+        <p>isActive: <input type="text" th:field="*{isActive}" /></p>
+        <br/>
+        <p><input type="submit" value="Send" /></p>
+    </form>
+</div>
+</body>
+</html>

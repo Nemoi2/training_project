@@ -1,3 +1,3 @@
-﻿Учебный проект. Ветка upgrade. Данный проект был усовершенствован с помощью Lombok и Spring Data.
+﻿Учебный проект. Ветка thymeleaf. Данный проект был еще раз усовершенствован с помощью добавления шаблонизатора Thymeleaf. (Проект не закончен)
 Репозиторий
-git - https://github.com/Nemoi2/training_project/tree/upgrade
+git - https://github.com/Nemoi2/training_project/tree/thymeleaf
